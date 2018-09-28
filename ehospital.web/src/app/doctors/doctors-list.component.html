@@ -1,0 +1,36 @@
+<h2 class="text-center">Doctors List</h2>
+<br>
+<table class="table table-responsive">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Qualification
+      </th>
+      <th>
+        Department
+      </th>
+      <th>
+        Experience
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let doctor of doctorsData'>
+      <td>
+        {{doctor.Name}}
+      </td>
+      <td>
+        {{doctor.Qualification}}
+      </td>
+      <td>
+        {{doctor.DepartmentName}}
+      </td>
+      <td>
+        {{doctor.TotalExperience}}
+      </td>
+    </tr>
+  </tbody>
+</table>
