@@ -1,5 +1,9 @@
 <h2 class="text-center">Doctors List</h2>
 <br>
+
+<button class="btn btn-success pull-right" (click)='addDoctorClick()'>
+  Add Doctor
+</button>
 <table class="table table-responsive">
   <thead>
     <tr>
@@ -11,9 +15,6 @@
       </th>
       <th>
         Department
-      </th>
-      <th>
-        Experience
       </th>
     </tr>
   </thead>
@@ -28,9 +29,9 @@
       <td>
         {{doctor.DepartmentName}}
       </td>
-      <td>
-        {{doctor.TotalExperience}}
-      </td>
     </tr>
   </tbody>
 </table>
+<div [hidden]='!showLoader'>
+  <p class="text-center">Loading data please wait !</p>
+</div>

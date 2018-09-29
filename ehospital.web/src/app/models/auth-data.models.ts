@@ -1,6 +1,6 @@
 export class AuthenticatedDataModel{
     public username: string = '';
-    public roles:string[] = [];
-    public token:string = '';
-    public isAuthenticated:boolean = false;
+    public role: string[] = [];
+    public isauthenticated: boolean = false;
+    public userid: number;
 }

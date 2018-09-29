@@ -13,6 +13,9 @@ import { AuthGuard } from './security/auth.guard';
 import { MenuComponent } from './common/menu.component';
 import { DoctorsListComponent } from './doctors/doctors-list.component';
 import { DoctorsService } from './services/doctors.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '../../node_modules/@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { AddDoctorComponent } from './doctors/add-doctor.component';
 
 
 @NgModule({
@@ -21,14 +24,21 @@ import { DoctorsService } from './services/doctors.service';
     LoginComponent,
     HomeComponent,
     MenuComponent,
-    DoctorsListComponent
+    DoctorsListComponent,
+    AddDoctorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthService, AuthGuard, DoctorsService],
+  providers: [AuthService, AuthGuard, DoctorsService,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : AuthInterceptor,
+      multi : true
+    }],
   bootstrap: [AppComponent]
 })
 

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { DoctorsService } from '../services/doctors.service';
 import { DoctorModel } from '../models/doctor.model';
-import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-bs4';
+import { Router } from '../../../node_modules/@angular/router';
+import * as jwt_decode from "jwt-decode";
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-doctors-list',
@@ -12,13 +14,39 @@ import 'datatables.net-bs4';
 })
 export class DoctorsListComponent implements OnInit {
   doctorsData:DoctorModel[];
-  dataTable: any;
+  start:number;
+  end:number;
+  showLoader:boolean;
 
-  constructor(private doctorService:DoctorsService) { }
+  constructor(private doctorService:DoctorsService, private router:Router,
+  private authservice: AuthService) { }
 
   ngOnInit() {
-    this.doctorsData = this.doctorService.getAllDoctors();
-    const table: any = $('table');
-    this.dataTable = table.DataTable();
+    this.start = 0;
+    this.end = 10;
+    this.showLoader = true;
+    this.doctorService.getAllDoctors().subscribe(
+      (data)=>
+      { 
+        this.doctorsData = data;
+        this.showLoader = false;
+      },
+      (err) => console.log(err)
+    )
+
+    
+
+    //let data  = jwt_decode(this.authservice.authenticatedData.token);
+    
+    //.getDoctorsOnDemard(this.start, this.end);
+  }
+
+  // @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+  //   this.end = this.end + 10;
+  //   this.doctorsData = this.doctorService.getDoctorsOnDemard(this.start, this.end);
+  // }
+
+  addDoctorClick():void{
+    this.router.navigateByUrl('/doctors/add');
   }
 }

@@ -20,25 +20,32 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginFormSubmit(loginFormData:NgForm):void{
+    
     if(!loginFormData.valid){
       alert('Please enter username and password');
     }
     else{
-      debugger;
-      this.authService.login(loginFormData.value);
-      if(this.authService.authenticatedData.isAuthenticated){
-        if(this.authService.returnUrl){
-          this.router.navigateByUrl('/'+this.authService.returnUrl);
-          this.authService.returnUrl = '';
+      
+      this.authService.login(loginFormData.value)
+      .subscribe(
+        ()=>{
+          if(this.authService.authenticatedData.isauthenticated){
+            if(this.authService.returnUrl){
+              this.router.navigateByUrl('/'+this.authService.returnUrl);
+              this.authService.returnUrl = '';
+            }
+            else{
+              this.router.navigateByUrl('/home');
+            }        
+          }
+          else{
+            alert('Invalid username or password!');
+          } 
+        },
+        err=>{
+          alert('Invalid username or password!');
         }
-        else{
-          this.router.navigateByUrl('/home');
-        }        
-      }
-      else{
-        alert('Invalid username or password!');
-      }
-     
+      )      
     }
   }
 }
